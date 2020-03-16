@@ -57,5 +57,9 @@ $ python run.py
 
 # Slack channel
 
-# Google Driver 
+![alt text](https://github.com/hungdnv9/Google-Driver-API-Upload-Lagre-File/blob/master/images/slack_notification.png)
+
+# Google Driver
+
+![alt text](https://github.com/hungdnv9/Google-Driver-API-Upload-Lagre-File/blob/master/images/drive_folder_struct.png) 
 
