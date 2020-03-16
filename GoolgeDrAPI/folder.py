@@ -1,4 +1,5 @@
 from GoolgeDrAPI.myconfig import folder_name
+from GoolgeDrAPI.utils import slack
 import logging
 
 logger = logging.getLogger('GoolgeDrAPI')
@@ -12,8 +13,9 @@ def fd_create(service, *args, **kargs):
     
     if 'parents_id' in kargs:
         base_metadata['parents'] = kargs['parents_id']
-        
-    logger.debug(f'Create Folder, generate metadata {base_metadata}')
+    msg = f'Create Folder, generate metadata {base_metadata}'
+    logger.debug(msg)
+    slack(msg)
 
     try:
         _object = service.files().create(body=base_metadata,
@@ -22,10 +24,14 @@ def fd_create(service, *args, **kargs):
             'name': folder_name,
             'id': _object.get('id')
         }
-        logger.debug(f'Create folder success, detail {metadata_response}')
+        msg = f'Create folder success, detail {metadata_response}'
+        logger.debug(msg)
+        slack(msg)
     
     except Exception as err:
-        logger.error(f'Create folder failed, reason {err}')
+        msg = f'Create folder failed, reason {err}'
+        logger.error(msg)
+        slack(msg)
 
     return metadata_response
 
@@ -33,13 +39,19 @@ def fd_delete(service, *args, **kargs):
     try:
         if args:
             for id in args:
-                logger.debug(f'Delete object {id}')
+                msg = f'Delete object {id}'
+                logger.debug(msg)
+                slack(msg)
                 service.files().delete(fileId=id).execute()
         if 'folder_id' in kargs:
-                logger.debug(f'Delete object {kargs["folder_id"]}')
+                msg = f'Delete object {kargs["folder_id"]}'
+                logger.debug(msg)
+                slack(msg)
                 service.files().delete(fileId=kargs['folder_id']).execute()
     except Exception as err:
-        logger.error(f'Delete failed, reason {err}')
+        msg = f'Delete failed, reason {err}'
+        logger.error(msg)
+        slack(msg)
 
 
 
